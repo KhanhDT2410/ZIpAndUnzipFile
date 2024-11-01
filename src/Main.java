@@ -108,12 +108,13 @@ public class Main {
     }
 
     public static boolean extractTo(String pathZipFile, String pathExtract) throws IOException {
+        //Khởi tạo đối tượng File mới đại diện cho thư mục đích (pathExtract).
         File destDir = new File(pathExtract);
         if (!destDir.exists() && !destDir.mkdirs()) {
             System.err.println("Failed to create extraction directory.");
             return false;
         }
-
+        //Đọc nội dung từ file zip
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(pathZipFile))) {
             ZipEntry zipEntry;
             byte[] buffer = new byte[1024];
@@ -126,7 +127,7 @@ public class Main {
                     System.err.println("Failed to create directory: " + parent);
                     return false;
                 }
-                
+                // Ghi dữ liệu từ file zip vào ổ đĩa
                 try (FileOutputStream fos = new FileOutputStream(newFile)) {
                     int len;
                     while ((len = zis.read(buffer)) > 0) {
